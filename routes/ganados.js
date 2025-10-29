@@ -35,10 +35,6 @@ rutas.get('/:id', ganadosController.show);
 // CRUD: Crear (un nuevo registro de ganado)
 //Validaciones   (  NO SE AGREGO EL DE LA IMAGEN)
 const rulesPost = [
-    body('proveedor')
-        .escape()
-        .notEmpty().withMessage('El proveedor es obligatorio.')
-        .isLength({ min: 3, max: 100 }).withMessage('El nombre del proveedor debe tener entre 3 y 100 caracteres.'),
     body('edad')
         .escape()
         .notEmpty().withMessage('La edad es obligatoria.')
@@ -98,11 +94,6 @@ rutas.post('/', uploadGanados.single('imagen'),rulesPost, ganadosController.stor
 const rulesPut = [
     param('id').isInt().withMessage('El ID debe ser un número entero.'),
 
-    body('proveedor')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El proveedor es obligatorio.')
-        .isLength({ min: 3, max: 100 }).withMessage('El nombre del proveedor debe tener entre 3 y 100 caracteres.'),
     body('edad')
         .optional()
         .escape()

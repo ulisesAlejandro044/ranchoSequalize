@@ -19,6 +19,14 @@ module.exports = (sequelize) => {
     },
     correo: {
       type: DataTypes.STRING
+    },
+    rfc: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    estado: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     tableName: 'clientes', // Nombre de la tabla en tu BD existente
