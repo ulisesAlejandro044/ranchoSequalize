@@ -45,7 +45,7 @@ const rulesPost = [
     body('rol')
         .escape()
         .notEmpty().withMessage('El rol es obligatorio.')
-        .isIn(['superAdmin', 'administrador']).withMessage('El rol debe ser uno de los siguientes: superAdmin o administrador.')
+        .isIn(['superAdmin', 'administrador', 'admin']).withMessage('El rol debe ser uno de los siguientes: superAdmin o administrador.')
 ];
 
 rutas.post('/', uploadAdmin.single('imagen'),rulesPost, administradoresController.store);
@@ -55,37 +55,30 @@ const rulesPut = [
 
     body('nombres')
         .escape()
-        .optional()
-        .notEmpty().withMessage('El nombre es obligatorio.')
+         .optional({ checkFalsy: true })
         .isLength({ min: 3, max: 100 }).withMessage('El nombre debe tener entre 3 y 100 caracteres.'),
     body('apellidos')
         .escape()
-        .optional()
-        .notEmpty().withMessage('Los apellidos son obligatorios.'),
+        .optional({ checkFalsy: true }),
     body('telefono')
         .escape()
-        .optional()
-        .notEmpty().withMessage('El teléfono es obligatorio.')
+         .optional({ checkFalsy: true })
         .isMobilePhone().withMessage('El teléfono debe ser un número válido.'),
     body('rfc')
         .escape()
-        .optional()
-        .notEmpty().withMessage('El RFC es obligatorio.')
+         .optional({ checkFalsy: true })
         .isLength({ min: 12, max: 13 }).withMessage('El RFC debe tener entre 12 y 13 caracteres.'),
     body('nss')
         .escape()
-        .optional()
-        .notEmpty().withMessage('El NSS es obligatorio.')
+         .optional({ checkFalsy: true })
         .isLength({ min: 11, max: 11 }).withMessage('El NSS debe tener 11 caracteres.'),
     body('email')
         .escape()
-        .optional()
-        .notEmpty().withMessage('El correo electrónico es obligatorio.')
+         .optional({ checkFalsy: true })
         .isEmail().withMessage('El correo electrónico debe ser válido.'),
     body('username')
         .escape()
-        .optional()
-        .notEmpty().withMessage('El nombre de usuario es obligatorio.'),
+        .optional({ checkFalsy: true }),
     body('password')
         .escape()
         .optional({ checkFalsy: true })
@@ -93,8 +86,7 @@ const rulesPut = [
         .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres.'),
     body('rol')
         .escape()
-        .optional()
-        .notEmpty().withMessage('El rol es obligatorio.')
+         .optional({ checkFalsy: true })
         .isIn(['superAdmin', 'administrador', 'admin']).withMessage('El rol debe ser uno de los siguientes: superAdmin o administrador.')
 ];
 
