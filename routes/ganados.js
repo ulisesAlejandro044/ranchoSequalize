@@ -92,62 +92,52 @@ rutas.post('/', uploadGanados.single('imagen'),rulesPost, ganadosController.stor
 // CRUD: Actualizar (un registro específico por su ID)
 //Validaciones put
 const rulesPut = [
-    param('id').isInt().withMessage('El ID debe ser un número entero.'),
+    param('id').isInt().withMessage('El ID debe ser un número entero.'),
 
-    body('edad')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('La edad es obligatoria.')
-        .isInt({ min: 0 }).withMessage('La edad debe ser un número entero mayor o igual a 0.'),
-    body('sexo')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El sexo es obligatorio.')
-        .isIn(['Macho', 'Hembra', 'macho', 'hembra']).withMessage('El sexo no es válido. Debe ser "Macho" o "Hembra".'),
-    body('peso')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El peso es obligatorio.')
-        .isFloat({ min: 0 }).withMessage('El peso debe ser un número mayor o igual a 0.'),
-    body('precio')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El precio es obligatorio.')
-        .isFloat({ min: 0 }).withMessage('El precio debe ser un número mayor o igual a 0.'),
-    body('origen')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El origen es obligatorio.')
-        .isLength({ min: 3, max: 100 }).withMessage('El origen debe tener entre 3 y 100 caracteres.'),
-    body('altura')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('La altura es obligatoria.')
-        .isFloat({ min: 0 }).withMessage('La altura debe ser un número mayor o igual a 0.'),
-    body('estado')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El estado es obligatorio.')
-        .isIn(['activo', 'vendido', 'enfermo', 'fallecido']).withMessage('El estado no es válido.'),
-    body('raza_id')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El ID de la raza es obligatorio.')
-        .isInt().withMessage('El ID de la raza debe ser un número entero.'),
-    body('categoria_id')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El ID de la categoría es obligatorio.')
-        .isInt().withMessage('El ID de la categoría debe ser un número entero.'),
-    body('corral_id')
-        .escape()
-        .optional()
-        .isInt().withMessage('El ID del corral debe ser un número entero.'),
-    body('proveedor_id')
-        .optional()
-        .escape()
-        .notEmpty().withMessage('El ID del proveedor es obligatorio.')
-        .isInt().withMessage('El ID del proveedor debe ser un número entero.'),
+    body('edad')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isInt({ min: 0 }).withMessage('La edad debe ser un número entero mayor o igual a 0.'),
+    body('sexo')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isIn(['Macho', 'Hembra', 'macho', 'hembra']).withMessage('El sexo no es válido.'),
+    body('peso')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isFloat({ min: 0 }).withMessage('El peso debe ser un número mayor o igual a 0.'),
+    body('precio')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isFloat({ min: 0 }).withMessage('El precio debe ser un número mayor o igual a 0.'),
+    body('origen')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isLength({ min: 3, max: 100 }).withMessage('El origen debe tener entre 3 y 100 caracteres.'),
+    body('altura')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isFloat({ min: 0 }).withMessage('La altura debe ser un número mayor o igual a 0.'),
+    body('estado')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isIn(['activo', 'vendido', 'enfermo', 'fallecido']).withMessage('El estado no es válido.'),
+    body('raza_id')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isInt().withMessage('El ID de la raza debe ser un número entero.'),
+    body('categoria_id')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isInt().withMessage('El ID de la categoría debe ser un número entero.'),
+    body('corral_id')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isInt().withMessage('El ID del corral debe ser un número entero.'),
+    body('proveedor_id')
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .escape()
+        .isInt().withMessage('El ID del proveedor debe ser un número entero.'),
 ];
 
 rutas.put('/:id', uploadGanados.single('imagen'),rulesPut, ganadosController.update);

@@ -77,27 +77,25 @@ rutas.post('/', rulesPost, rastrosController.store);
 // CRUD: Actualizar (un registro específico por su ID)
 //Validaciones put
 const rulesPut = [
-    body('fecha')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('La fecha es obligatoria.')
-        .isISO8601().withMessage('El formato de la fecha no es válido.')
-        .isBefore(new Date().toISOString()).withMessage('La fecha no puede ser en el futuro.'),
-    body('destino')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('El destino es obligatorio.')
-        .isLength({ min: 3, max: 100 }).withMessage('El destino debe tener entre 3 y 100 caracteres.'),
-    body('estado')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('El estado es obligatorio.')
-        .isIn(['en proceso', 'finalizado', 'rechazado']).withMessage('El estado no es válido.'),
-    body('ganado_id')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('El ID del ganado es obligatorio.')
-        .isInt().withMessage('El ID del ganado debe ser un número entero.'),
+    param('id').isInt().withMessage('El ID debe ser un número entero.'),
+
+    body('fecha')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isISO8601().withMessage('El formato de la fecha no es válido.')
+        .isBefore(new Date().toISOString()).withMessage('La fecha no puede ser en el futuro.'),
+    body('destino')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isLength({ min: 3, max: 100 }).withMessage('El destino debe tener entre 3 y 100 caracteres.'),
+    body('estado')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isIn(['en proceso', 'finalizado', 'rechazado']).withMessage('El estado no es válido.'),
+    body('ganado_id')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isInt().withMessage('El ID del ganado debe ser un número entero.'),
 ];
 
 rutas.put('/:id', rulesPut, rastrosController.update);

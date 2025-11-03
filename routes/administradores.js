@@ -88,14 +88,14 @@ const rulesPut = [
         .notEmpty().withMessage('El nombre de usuario es obligatorio.'),
     body('password')
         .escape()
-        .optional()
-        .notEmpty().withMessage('La contraseña es obligatoria.')
+        .optional({ checkFalsy: true })
+        //.notEmpty().withMessage('La contraseña es obligatoria.')
         .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres.'),
     body('rol')
         .escape()
         .optional()
         .notEmpty().withMessage('El rol es obligatorio.')
-        .isIn(['superAdmin', 'administrador']).withMessage('El rol debe ser uno de los siguientes: superAdmin o administrador.')
+        .isIn(['superAdmin', 'administrador', 'admin']).withMessage('El rol debe ser uno de los siguientes: superAdmin o administrador.')
 ];
 
 rutas.put('/:id', uploadAdmin.single('imagen'),rulesPut, administradoresController.update);

@@ -82,34 +82,29 @@ rutas.post('/', rulesPost, lechesController.store);
 // CRUD: Actualizar (un registro específico por su ID)
 //Validaciones put
 const rulesPut = [
-    param('id').isInt().withMessage('El ID debe ser un número entero.'),
+    param('id').isInt().withMessage('El ID debe ser un número entero.'),
 
-    body('fecha')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('La fecha es obligatoria.')
-        .isISO8601().withMessage('El formato de fecha no es válido.')
-        .isBefore(new Date().toISOString()).withMessage('La fecha no puede ser en el futuro.'),
-    body('cantidad')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('La cantidad es obligatoria.')
-        .isFloat({ min: 0 }).withMessage('La cantidad debe ser un número positivo.'),
-    body('densidad')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('La densidad es obligatoria.')
-        .isFloat({ min: 1.025, max: 1.035 }).withMessage('La densidad no está en el rango normal para la leche.'),
-    body('tanque_id')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('El ID del tanque es obligatorio.')
-        .isInt().withMessage('El ID del tanque debe ser un número entero.'),
-    body('ganado_id')
-        .escape()
-        .optional()
-        .notEmpty().withMessage('El ID del ganado es obligatorio.')
-        .isInt().withMessage('El ID del ganado debe ser un número entero.'),
+    body('fecha')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isISO8601().withMessage('El formato de fecha no es válido.')
+        .isBefore(new Date().toISOString()).withMessage('La fecha no puede ser en el futuro.'),
+    body('cantidad')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isFloat({ min: 0 }).withMessage('La cantidad debe ser un número positivo.'),
+    body('densidad')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isFloat({ min: 1.025, max: 1.035 }).withMessage('La densidad no está en el rango normal.'),
+    body('tanque_id')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isInt().withMessage('El ID del tanque debe ser un número entero.'),
+    body('ganado_id')
+        .escape()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
+        .isInt().withMessage('El ID del ganado debe ser un número entero.'),
 ];
 
 rutas.put('/:id',rulesPut, lechesController.update); 
