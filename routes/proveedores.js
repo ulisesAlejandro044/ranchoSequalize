@@ -88,32 +88,32 @@ const rulesPut = [
 
     body('nombre')
         .escape()
-        .optional()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
         .notEmpty().withMessage('El nombre es obligatorio.')
         .isLength({ min: 3, max: 100 }).withMessage('El nombre debe tener entre 3 y 100 caracteres.'),
     body('direccion')
         .escape()
-        .optional()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
         .notEmpty().withMessage('La dirección es obligatoria.')
         .isLength({ min: 5, max: 255 }).withMessage('La dirección debe tener entre 5 y 255 caracteres.'),
     body('correo')
         .escape()
-        .optional()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
         .notEmpty().withMessage('El correo es obligatorio.')
         .isEmail().withMessage('Debe ser un correo electrónico válido.'),
     body('telefono')
         .escape()
-        .optional()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
         .notEmpty().withMessage('El teléfono es obligatorio.')
         .isMobilePhone('es-MX').withMessage('El teléfono no tiene un formato válido.'),
     body('categoria')
         .escape()
-        .optional()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
         .notEmpty().withMessage('La categoría es obligatoria.')
         .isIn(['Leche', 'Ganado', 'Alimento', 'Equipamiento', 'Otros']).withMessage('La categoría no es válida.'),
     body('estado')
         .escape()
-        .optional()
+        .optional({ checkFalsy: true }) // <-- CORREGIDO
         .notEmpty().withMessage('El estado es obligatorio.')
         .isIn(['activo', 'inactivo', 'en revision']).withMessage('El estado no es válido.'),
 ];

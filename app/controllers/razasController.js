@@ -81,22 +81,20 @@ async function update(req, res) {
 
 async function destroy(req, res) {
     try {
-        const id = req.params.id;
+                const id = req.params.id;
+                // DELETE FROM corrales WHERE id = ?
+                const filasEliminadas = await Raza.destroy({
+                    where: { id: id }
+                });
         
-        // CORRECCIÓN: Realizamos eliminación lógica (cambio de estado) sobre la raza
-        // UPDATE razas SET estado = 'INACTIVO' WHERE id = ?
-        const [filasActualizadas] = await Raza.update({ estado: 'INACTIVO' }, {
-            where: { id: id }
-        });
-
-        if (filasActualizadas === 0) {
-            return res.status(404).json({ mensaje: 'Raza no encontrada para desactivar.' });
-        }
-
-        res.json({ mensaje: 'Raza marcada como INACTIVA con éxito.', filas: filasActualizadas });
-    } catch (error) {
-        res.status(500).json({ mensaje: 'Error al desactivar el registro: ' + error.message });
-    }
+                if (filasEliminadas === 0) {
+                    return res.status(404).json({ mensaje: 'Registro no encontrado para eliminar.' });
+                }
+        
+                res.json({ mensaje: 'Registro eliminado con éxito.', filas: filasEliminadas });
+            } catch (error) {
+                res.status(500).json({ mensaje: 'Error al eliminar el registro: ' + error.message });
+            }
 }
 
 module.exports = {

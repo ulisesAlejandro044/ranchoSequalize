@@ -80,23 +80,21 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-    try {
-        const id = req.params.id;
-        
-        // CORRECCIÓN: Realizamos eliminación lógica (cambio de estado) sobre el tanque
-        // UPDATE tanques SET estado = 'INACTIVO' WHERE id = ?
-        const [filasActualizadas] = await Tanque.update({ estado: 'INACTIVO' }, {
-            where: { id: id }
-        });
-
-        if (filasActualizadas === 0) {
-            return res.status(404).json({ mensaje: 'Tanque no encontrado para desactivar.' });
-        }
-
-        res.json({ mensaje: 'Tanque marcado como INACTIVO con éxito.', filas: filasActualizadas });
-    } catch (error) {
-        res.status(500).json({ mensaje: 'Error al desactivar el registro: ' + error.message });
-    }
+     try {
+                    const id = req.params.id;
+                    // DELETE FROM corrales WHERE id = ?
+                    const filasEliminadas = await Tanque.destroy({
+                        where: { id: id }
+                    });
+            
+                    if (filasEliminadas === 0) {
+                        return res.status(404).json({ mensaje: 'Registro no encontrado para eliminar.' });
+                    }
+            
+                    res.json({ mensaje: 'Registro eliminado con éxito.', filas: filasEliminadas });
+                } catch (error) {
+                    res.status(500).json({ mensaje: 'Error al eliminar el registro: ' + error.message });
+                }
 }
 
 module.exports = {
