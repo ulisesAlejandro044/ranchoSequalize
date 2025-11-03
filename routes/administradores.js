@@ -45,7 +45,7 @@ const rulesPost = [
     body('rol')
         .escape()
         .notEmpty().withMessage('El rol es obligatorio.')
-        .isIn(['superAdmin', 'administrador']).withMessage('El rol debe ser uno de los siguientes: superAdmin o administrador.')
+        .isIn(['superAdmin', 'administrador', 'admin']).withMessage('El rol debe ser uno de los siguientes: superAdmin o administrador.')
 ];
 
 rutas.post('/', uploadAdmin.single('imagen'),rulesPost, administradoresController.store);

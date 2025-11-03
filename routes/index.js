@@ -5,9 +5,9 @@ const app= xprs();
 //   console.log(`Petición recibida: ${req.method} ${req.path}`);
 //   next(); // Pasa a la siguiente ruta o middleware
 // });     //ESTO ES PARA CORROBORAR SI EXPRESS ESTA RECIBIENDO LA PETICION DE ANGULAR
-
 const port=3000;
 const cors = require('cors');
+const RutasAuth = require('./auth'); // Importar las rutas de autenticación
 
 app.use(cors({
   origin: ['http://localhost:4200', 'http://127.0.0.1:4200'],
@@ -19,7 +19,7 @@ app.use(xprs.json());
 app.use(xprs.static('uploads'));
 
 
-
+const authRoutes = require('./auth');
 const Rutasganados = require('./ganados');
 const Rutasclientes = require('./clientes');
 const Rutastanques = require('./tanques');
@@ -35,7 +35,7 @@ const Rutasadministradores = require('./administradores');
 
 
 
-
+app.use('/auth', RutasAuth); // Usar las rutas de autenticación
 app.use('/ganados', Rutasganados);
 app.use('/clientes', Rutasclientes);
 app.use('/tanques', Rutastanques);
